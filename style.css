@@ -39,7 +39,6 @@ center.math{
 }
 .pd{
   display:flex;
-  justify-content: space-between;
 }
 .pd>div>p{
   width:50vw;
