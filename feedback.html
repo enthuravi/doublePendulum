@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<title>Double Pendulum Feedback</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+<div class="header"> Double Pendulum Feedback
+</div>
+<div class="form">
+<div class="rate" id="rating">
+</div>
+<input type="file" accept="image/*">Select an image
+</div>
+</div>
+<script>
+var rating= document.getElementById("rating");
+let r=20;
+let sr= ((Math.sin(Math.PI/5)*r*2)*Math.cos(Math.PI/5)-(Math.sin(Math.PI/5)*r)/Math.cos(Math.PI/5))/Math.sin(Math.PI/5);
+function rate(num){
+while(rating.childElementCount!=0){
+    rating.removeChild(rating.firstChild)
+}
+for(let i=0; i<5; i++){
+let star=document.createElement("canvas");
+star.width="50"; star.height="50";
+let context= star.getContext("2d");
+if(i<=num){context.fillStyle="gold"}
+else{context.fillStyle="rgba(0,0,0,0.0)"}
+context.beginPath();
+context.lineJoin='round';
+for(let k=0; k<5; k++){
+context.save();
+context.translate(25,25)
+context.rotate(k*Math.PI/5*2)
+context.lineTo(sr*Math.sin(Math.PI/-5),sr*Math.cos(Math.PI/5)*-1)
+context.lineTo(0,-1*r)
+context.lineTo(sr*Math.sin(Math.PI/5),sr*Math.cos(Math.PI/5)*-1)
+context.restore();
+}
+context.closePath();
+context.fill();
+context.stroke();
+star.classList.add('child');
+rating.appendChild(star);
+}
+}
+
+rate(-1);
+rating.addEventListener('click',(e)=>{
+if(e.target.classList.contains('child')){
+index=0
+sibling=e.target.previousElementSibling
+while (sibling){
+index++;
+sibling=sibling.previousElementSibling}
+rate(index)
+console.log(index)}
+})
+var submit=async(e)=>{
+const data = {
+        name: 'Ravi Ranjan Pandit',
+        email: 'ravi.pranjan00@gmail.com',
+        rating:5,
+        feedback:'Amazing!',
+        profile: 'blob:null/0c1578f6-722e-40aa-8f23-da2cca820a3b'
+      };
+console.log(data, JSON.stringify(data))
+
+      const response = await fetch('https://script.google.com/macros/s/AKfycbwEzWQYFhP9-pGVmGqts9WrAkELHi9I0u2qjisRGznFwIicUDKNPuJgFJqOATio6KNFQg/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+}
+
+async function loadSpreadsheetData(){
+  try{
+    const response = await fetch('https://script.google.com/macros/s/AKfycbwEzWQYFhP9-pGVmGqts9WrAkELHi9I0u2qjisRGznFwIicUDKNPuJgFJqOATio6KNFQg/exec',{
+      method: 'GET',
+      redirect:"follow"
+    });
+    const result = await response.json();
+
+    if(result.status ==="success"){console.log(result.data)}
+    else{console.log("Error")}
+
+  }
+  catch(error){
+    console.log("Fetch error:",error);
+  }
+}
+
+loadSpreadsheetData();
+</script>
+</body>
+</html>
