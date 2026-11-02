@@ -57,7 +57,18 @@ if(e.target.classList.value=='profile'){
 }
 })
 
+var name="Anonymous", email="Anonymous",thoughts;
+let name_input = document.querySelector('input[type=text]');
+let email_input = document.querySelector('input[type=email]');
+let thoughts_input = document.querySelector('textarea');
+function update(){
+  if(name_input.value){name=name_input.value}else{name="Anonymous"}
+  if(email_input.value){email=email_input.value}else{email="Anonymous"}
+  if(thoughts_input.value){thoughts=thoughts_input.value}else{thoughts=''}
+}
+var index=-1;
 rate(-1);
+
 rating.addEventListener('click',(e)=>{
 if(e.target.classList.contains('child')){
 index=0
@@ -68,12 +79,17 @@ sibling=sibling.previousElementSibling}
 rate(index)
 console.log(index)}
 })
+
 var submit=async(e)=>{
+if(index<0){
+  alert("Select a valid star rating")
+  return;
+}
 const data = {
-        name: 'Ravi Ranjan Pandit from ara bihar india earth milky',
-        email: 'ravi.pranjan00@gmail.com',
-        rating:5,
-        feedback:'Amazing! work what a wonderful project and you made a website for feedback!!!??',
+        name: name,
+        email: email,
+        rating:index+1,
+        feedback:thoughts,
         profile: src
       };
 console.log(data, JSON.stringify(data))
@@ -109,8 +125,9 @@ async function loadSpreadsheetData(){
 loadSpreadsheetData();
 
 //=====================responses==================
-
+var star_total=[]
 function display(){
+  star_total=[]
 document.querySelectorAll('.responses')[0].innerHTML='';
 ratings.forEach((i)=>{
   var feed = document.createElement("div");
@@ -137,6 +154,7 @@ ratings.forEach((i)=>{
   feedback.innerHTML=i.Feedback;
   feed.appendChild(feedback)
 
-  document.querySelectorAll('.responses')[0].appendChild(feed)
+  document.querySelectorAll('.responses')[0].appendChild(feed);
+  star_total.push(i.Rating);
 })
 }

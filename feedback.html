@@ -18,10 +18,11 @@
 <input type="file" accept="image/*" onchange="draw()">
 
 <div class="inputs">
-<input type="text">
-<input type="email">
-<textarea id="feedback"></textarea>
+<p class="text"><input type="text" oninput="update()" onchange="update()" required></p>
+<p class="email"><input type="email" oninput="update()" onchange="update()" required></p>
+<p class="thoughts"><textarea id="feedback" oninput="update()" onchange="update()" required></textarea></p>
 </div>
+<button onclick="submit()">Submit</button>
 </div>
 <div class="responses">
 
