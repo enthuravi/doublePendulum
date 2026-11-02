@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Double Pendulum Feedback</title>
+<meta charset="utf-16">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +12,16 @@
 <div class="form">
 <div class="rate" id="rating">
 </div>
-<input type="file" accept="image/*">Select an image
+<div class='profile'>
+<canvas width="128" height="128"></canvas>
+</div>
+<input type="file" accept="image/*" onchange="draw()">
+
+<div class="inputs">
+<input type="text">
+<input type="email">
+<textarea id="feedback"></textarea>
+</div>
 </div>
 <div class="responses">
 
@@ -27,8 +37,9 @@ while(rating.childElementCount!=0){
 }
 for(let i=0; i<5; i++){
 let star=document.createElement("canvas");
-star.width="50"; star.height="50";
+star.width="100"; star.height="100";
 let context= star.getContext("2d");
+context.scale(2,2);
 if(i<=num){context.fillStyle="gold"}
 else{context.fillStyle="rgba(0,0,0,0.0)"}
 context.beginPath();
@@ -50,6 +61,32 @@ rating.appendChild(star);
 }
 }
 
+var src;
+var prof = document.querySelectorAll('.profile')[0];
+  var canvas= prof.querySelector('canvas');
+  var ctx= canvas.getContext('2d');
+
+function draw(){
+  var upload = document.querySelector('input[type=file]').files[0]
+  if(!!upload){
+  let source = URL.createObjectURL(upload)
+  var img = new Image;
+  img.src=source;
+  console.log('Source',src)}
+  else{var img = new Image; img.src='./avatar.png'
+  console.log(img)}
+  img.onload=function(){
+  ctx.drawImage(img,0,0,128,128);
+  src = canvas.toDataURL('image/png')};
+}
+draw();
+
+prof.addEventListener('click',(e)=>{
+if(e.target.classList.value=='profile'){
+  document.querySelector('input[type=file]').click();
+}
+})
+
 rate(-1);
 rating.addEventListener('click',(e)=>{
 if(e.target.classList.contains('child')){
@@ -63,11 +100,11 @@ console.log(index)}
 })
 var submit=async(e)=>{
 const data = {
-        name: 'Ravi Ranjan Pandit',
+        name: 'Ravi Ranjan Pandit from ara bihar india earth milky',
         email: 'ravi.pranjan00@gmail.com',
         rating:5,
-        feedback:'Amazing!',
-        profile: 'blob:null/0c1578f6-722e-40aa-8f23-da2cca820a3b'
+        feedback:'Amazing! work what a wonderful project and you made a website for feedback!!!??',
+        profile: src
       };
 console.log(data, JSON.stringify(data))
 
@@ -80,7 +117,7 @@ console.log(data, JSON.stringify(data))
 
 }
 
-var ratings;
+var ratings=[];
 
 async function loadSpreadsheetData(){
   try{
@@ -90,7 +127,7 @@ async function loadSpreadsheetData(){
     });
     const result = await response.json();
 
-    if(result.status ==="success"){ratings = result.data}
+    if(result.status ==="success"){ratings = result.data; display();}
     else{console.log("Error")}
 
   }
@@ -100,6 +137,39 @@ async function loadSpreadsheetData(){
 }
 
 loadSpreadsheetData();
+
+//=====================responses==================
+
+function display(){
+document.querySelectorAll('.responses')[0].innerHTML='';
+ratings.forEach((i)=>{
+  var feed = document.createElement("div");
+  feed.setAttribute("class",'feed');
+  
+  var header = document.createElement('div');
+  header.setAttribute('class','feed-header');
+  feed.appendChild(header)
+
+  var profile = new Image;
+  profile.src=i.Profile;
+  header.appendChild(profile)
+  
+  var name = document.createElement('p');
+  name.innerHTML = i.Name;
+  header.appendChild(name)
+
+  var stars = document.createElement('div');
+  stars.innerHTML='&starf;'.repeat(i.Rating)
+  header.appendChild(stars);
+
+  var feedback = document.createElement("div");
+  feedback.setAttribute('class','message');
+  feedback.innerHTML=i.Feedback;
+  feed.appendChild(feedback)
+
+  document.querySelectorAll('.responses')[0].appendChild(feed)
+})
+}
 </script>
 </body>
 </html>
