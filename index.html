@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Double Pendulum System</title>
+	<meta charset="utf-16">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -21,12 +22,14 @@
 		    Non-linear dynamical systems refer to systems that exhibit behaviour not restricted to linear relationship, often characterized by complex phenomenon suc as chaos and sensitive dependence on initial condition.
 			<br>
 			<b>Chaos</b> is the study of phenomena which are highly sensitive to initial condition- even very small difference in initial condition in initial state between two systems can lead to very different states overtime.
+		  </p>
 			<br>
 			<center class="math">Δx(t) ~ Δx(t<sub>0</sub>)<sup>λt</sup></center>
 			<center>Δx(t) : The difference between states of two systems at time t</center>
 			<center>Δx(t<sub>0</sub>) : The difference of intial states of two systems</center>
 			<center>λt : Difference appears exponentially with time propotional</center>
 			<br>
+		  <p>
 			meaning, difference of state between two systems at a point of time is exponential to time times the initial state difference.
 		  </p>
 		</div>
@@ -40,6 +43,99 @@
 		  </div>
 		  <img src="dp.png">
 		</div>
+		<div class="section">
+		  <b>Lagrangian equation</b>
+		  <p>
+		    <i>L = ½ (m1-m2)l1²θ̇1² + ½ m2l2²θ̇2² + m2l2l1θ̇1θ̇2cos(θ1-θ2) + (m1+m2)gl1cosθ1 + m2gl2cosθ2</i>
+			<br>
+			After solving Euler Lagrange method for θ1 and θ2:
+			<br>
+			<i>(m1+m2)l1²θ̈1 + m2l1l2θ̈2cos(θ1-θ2) + m2l1l2θ̇2²sin(θ1-θ2) + (m1+m2)gl1sinθ1 = 0</i><br>
+			<i>m2l2²θ̈2 + m2l1l2θ̈1cos(θ1-θ2) – m2l1l2θ̇1²sin(θ1-θ2) + m2gl2sinθ2 = 0</i>
+		  </p>
+		</div>
+		<div class="section">
+		  <b>Numerical Method implementation for integration</b>
+		  <p>
+		    The project largely is the development and implementation of numerical method of integration for a system of double Pendulum.
+		    <ul>
+			  <li>
+			    <p><b>Euler's Method:</b> It computes the nest point based on previous point and slope function. This method is <b><i>not effiecient</i></b> for continuous functions as it requires very small step size in turn increasing the iteration.</p>
+			  </li>
+			  <li>
+			    <p><b>Runge-kutta 4<sup>th</sup> order (RK4) method:</b> It is a <b><i>more efficient</i></b> way to compute next point based on current point and its slope function. It does not vary with step size.</p>
+			  </li>
+			</ul>
+		  </p>
+		</div>
+		<div class="section two">
+		  <img src="Euler vs rk4.png">
+		  <img src="Euler vs rk4 dt32.png">
+		</div>
+		<div class="section">
+		  <p>The above image shows the difference between euler's method and RK4 method for integrating into a sine function. While Euler's method struggles to keep up with the actual function with bigger step size, RK4 method follows the function exactly even at bigger step-size.</p>
+		</div>
+		<div class="section">
+		  <p>The development of simulation includes the following steps:</p>
+		  <ol type='i'>
+		    <li>
+			  <p><b>System designing and mathematical modelling of double Pendulum system</b></p>
+			  <p>This includes defining of dependent parameters like angles (θ1 and θ2) and angular velocities (ω1 ω2), independent parameters like bob masses (m1 and m2), lengths of string (l1 and l2) and gravity g and other parameters like step-size for iteration.<p>
+			</li>
+			<li>
+			  <p><b>Mathematical model development and implementation</b></p>
+			  <p>This includes development of mathematical model specific to system design and parameters. It generates a table of states of system for iteration with time.</p>
+			</li>
+			<li>
+			  <p><b>Visualization: Simulation and Graphs</b></p>
+			  <p>Based on table generated in previous step, visual simulation is implemented and angle vs time graph is created.</p>
+			</li>
+			<li>
+			  <p><b>Data retrieval for comparative study</b></p>
+			  <p>The table data is retrieved in Comma Separated Values (.csv) format and then visualized for studying.</p>
+			</li>
+		  </ol>
+		</div>
+		<div class="section">
+		  <b>Logic development and Firmware implementation</b>
+		  <p>The double pendulum system works on the following four equations:
+		  <div class="math">
+		    <p>θ̈1=</p>
+			<p><span>(-m₂l₂²θ̇²sin(θ₁-θ₂) – (m₁+m₂)l₂gsinθ₁ – m₂l₁l₂cos(θ₁-θ₂)sin(θ₁-θ₂) + m₂gl₂sinθ₂cos(θ₁-θ₂))</span><span>((m₁+m₂)l₁l₂ – m₂l₁l₂cos²(θ₁-θ₂)) </span></p>
+		  </div>
+		  <div class="math">
+			<p>θ̈2=</p>
+			<p><span>((m₁+m₂)l₁²sin(θ₁-θ₂) – (m₁+m₂)gl₁sinθ₂ + m₂l₁l₂θ̇₂²sin(θ₁ θ₂)cos(θ₁-θ₂) + (m₁+m₂)l₁gsinθ₁cos(θ₁-θ₂))</span><span>((m₁+m₂)l₁l₂ – m₂l₁l₂cos²(θ₁-θ₂))</span></p>
+		  </div>
+		  <div class="math">
+			<p>(θ̇₁)= </p>
+			<p>∫θ̈₁ dt </p>
+		  </div>
+		  <div class="math">
+			<p>(θ̇₂)=</p>
+			<p>∫θ̈₂dt</p>
+		  </div>
+		</div>
+		<div class="section">
+		  <b>Results</b>
+		  <div class="two">
+		    <img src="dp ui.png">
+			<img src="dp cs.png">
+		  </div>
+		  <div class="two">
+		    <img src="graph.png">
+		  </div>
+			<img style='width:90vw;' src="chaos graph.png">
+		</div>
+		<div class="feedback">
+		  <a href="feedback.html">
+		    <p>Click here for feedback</p>
+		  </a>
+		</div>
+	  </div>
+	  <div class="footer">
+	    <p>Made with 🤍 by Ravi</p>
+		<p>Department of Electronics, Acharya Narendra Dev College, University of Delhi</p>
 	  </div>
     </div>
   </body>

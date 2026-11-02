@@ -3,6 +3,9 @@
   padding:0;
   box-sizing:border-box;
 }
+html,body{
+width:100%;
+height:100%;}
 body{background:white;}
 .container{
   height:100vh;
@@ -22,21 +25,56 @@ body{background:white;}
 .content{
   margin-left:5vw;
   font-size:20px;
+  width:90vw;
   line-height:24px;
+}
+content>*{
+  line-height:24px;
+}
+.section{
+  margin:8px 0;
+  background:white;
+  padding:8px;
+  border-radius:8px;
 }
 .section>b{
   display:block;
   padding:8px 0 4px 0;
 }
+.section>p>i{
+  font-family:math;
+}
 .content p{
   width:90vw;
   text-align:justify;
+}
+li{margin-top:4px;}
+.two{
+  width:90vw;
+  display:flex;
+  justify-content:space-between;
+  margin:8px 0;
 }
 center.math{
   padding:5px;
   width:300px;
   border:2px solid black;
   margin:8px auto;
+}
+div.math{
+display:flex;
+}
+div.math>p{
+  display:flex;
+  width:auto;
+  min-width:50px;
+  padding:4px;
+  flex-direction:column;
+  align-items:center;
+  justify-content: center;
+}
+div.math>p>span:nth-child(1){
+border-bottom:2px solid black;
 }
 .pd{
   display:flex;
@@ -46,6 +84,33 @@ center.math{
 }
 .section>img{
   width:40vw;
+}
+.two>img{width:43vw;}
+a,.feedback>a>p{
+  display:block;
+  text-transform:uppercase;
+  width:90vw;
+  text-align:center;
+  color:rgb(120,100,200);
+  padding:16px 0}
+
+.footer{
+  width:100%;
+  background:rgb(120,100,200);
+  height:200px;
+}
+.footer>p:first-child{
+  font-family:monospace;
+  font-size:32px;
+  font-weight:bold;
+  text-align:center;
+  padding:6px;
+  color:white;
+}
+.footer>p{
+font-size:16px;
+text-align:center;
+color:white;
 }
 /*-----Form-----*/
 .form{
