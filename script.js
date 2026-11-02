@@ -1,3 +1,4 @@
+document.addEventListener('resize',(e)=>{e.preventDefault();})
 var rating= document.getElementById("rating");
 let r=20;
 let sr= ((Math.sin(Math.PI/5)*r*2)*Math.cos(Math.PI/5)-(Math.sin(Math.PI/5)*r)/Math.cos(Math.PI/5))/Math.sin(Math.PI/5);
@@ -92,7 +93,6 @@ const data = {
         feedback:thoughts,
         profile: src
       };
-console.log(data, JSON.stringify(data))
 
       const response = await fetch('https://script.google.com/macros/s/AKfycbwEzWQYFhP9-pGVmGqts9WrAkELHi9I0u2qjisRGznFwIicUDKNPuJgFJqOATio6KNFQg/exec', {
         method: 'POST',
@@ -101,6 +101,7 @@ console.log(data, JSON.stringify(data))
         body: JSON.stringify(data)
       });
 
+      alert("Form submitted successfully!");
 }
 
 var ratings=[];
